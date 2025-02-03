@@ -1,0 +1,4 @@
+#Copied from Evan's repo
+#https://github.com/FRBs/Transient_Phase_Space/blob/master/gach_rud/misc
+2000 5.0e-8  BD LP944-20
+2520.0 0.00000044100 TVLM513

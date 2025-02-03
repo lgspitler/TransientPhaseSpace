@@ -1,0 +1,3 @@
+#Copied from Evan's repo:
+#https://github.com/FRBs/Transient_Phase_Space/blob/master/gach_rud/gw170817
+7.1e+7 1.4e+5

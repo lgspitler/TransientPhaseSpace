@@ -1,0 +1,12 @@
+#Original from Evan:
+#4.0e-3 5.0e-9 Jupiter DAM
+#
+#My investiagation:
+#DAM has two components: S-bursts and L-bursts
+#
+#S-burst stats from https://www.sciencedirect.com/science/article/pii/S0032063300001574#aep-section-id20
+#"fixed frequency duration of a few milliseconds"
+#Obs frequency = 21 MHz
+#Peak in plot 6 is 7e5 Jy
+#Distance to Jupiter in kpc = 2.5e-8
+0.002	0.021	4.5e-10	
