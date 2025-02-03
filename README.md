@@ -6,20 +6,16 @@ The references for all the data points can be found in the caption of Figure 2 i
 ##TransientPhaseSpace
 Forked from Kenzie's github
 
-Expanded it to include longer transients using some of the data from Evan Keane's code (link above). 
+Expanded it to include longer transients (SNe, GRB, LPTs, etc.) using some of the data from Evan Keane's code (link above). 
 
-- Non-repeating FRBs: The list is current incomplete and only contains one-offs with redshifts from host galaxy associations. 
+Script for this plot: short_long_dur_transients.py
 
-- The following files were copied from Evan's repository:
+Notes: 
 
-Gosia_GRB2.txt		Gosia_XRB2.txt
-Gosia_SN2.txt		Gosia_flare_stars2.txt
-solar_bursts.txt
-gw170817.txt
-brown_dwarf.txt
+- Non-repeating FRBs: The list is incomplete. Only one-offs with redshifts from host galaxy associations. 
 
-- I modified solar_system.txt
+- The following files were copied from Evan's repository: Gosia_GRB2.txt, Gosia_XRB2.txt, Gosia_SN2.txt, Gosia_flare_stars2.txt, solar_bursts.txt, gw170817.txt, brown_dwarf.txt
 
-- I added a Long Period Transients file:
+- I updated the value for Jupiter DAM "solar_system.txt".
 
-LPT.txt
+- I added a Long Period Transients file: LPT.txt
