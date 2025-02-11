@@ -96,14 +96,7 @@ if plot_Tb:
 #        plt.text(frb_z_T[ii]+0.1, frb_z_Ld[-1], 'z=%1.1f' % frb_z[ii], color='lightcoral', size=plt_size, va='center')
 
 # Pulsars general (psrcat)
-psr=open('pulsars.txt','r')
-lines=psr.readlines()
-psrx=[]
-psry=[]
-for n in lines:
-    psrx.append(float(n.split()[4])) 
-    psry.append(float(n.split()[5]))
-
+psrx,psry=np.loadtxt('pulsars_psrcat_2.5.1.txt', unpack=True, usecols=(4,5))
 
 plt.scatter(psrx,psry,color=plt_pulsar[1],marker=plt_pulsar[0],alpha=plt_pulsar[2])
 plt.text(0.5e-7,1e-3,'Pulsars',color=plt_pulsar[1], size=plt_size)
