@@ -216,8 +216,11 @@ for n in range(len(m81nano)):
 plt.scatter(m81nanox,m81nanoy,color=plt_repeater[1],marker=plt_repeater[0], alpha=plt_repeater[2])
 #plt.text(3e-7,1e7,'FRB 20200120E (this work)', color='black')
 
-### One off FRBs (only localized)
-#ASKAP
+################################
+### One off FRBs (only with host redshift)
+###############################
+
+#---- ASKAP
 askap=np.loadtxt('askap_z_tables.txt', unpack=True, usecols=(1,2,3,4), skiprows=47)
 
 askapx=1e-3*askap[2] #convert from ms to seconds
@@ -225,16 +228,25 @@ askapy=askap[1]/askap[2]*askap[3]**2*1e6
 
 plt.scatter(askapx, askapy, color=plt_oneoff[1], marker=plt_oneoff[0], alpha=plt_repeater[2])
 
-plt.text(1e-8,0.5e15,'Non-repeating\nFast Radio Bursts', color=plt_oneoff[1], size=plt_size)
-plt.text(1e-8,1e12,'Fast Radio\nBursts', color=plt_oneoff[1], size=plt_size)
 
-#DSA-110
+#------ DSA-110
 dsa110=np.loadtxt('dsa110_law_clean.txt', unpack=True, usecols=(2,3,4))
 
 dsa110x=1e-3*dsa110[1]
 dsa110y=dsa110[0]/dsa110[1]*1e6*dsa110[2]**2
 
 plt.scatter(dsa110x, dsa110y, color=plt_oneoff[1], marker=plt_oneoff[0], alpha=plt_oneoff[2])
+
+#------- CHIME/FRB + KKO
+chime_kko=np.loadtxt('chime_kko_oneoff.txt', unpack=True, usecols=(1,3,5))
+chime_kko_x = 1e-3*chime_kko[1]*0.6  #Duration in ms x 0.6 GHz
+chime_kko_y = chime_kko[0]*1e6*chime_kko[2]**2 #Flux in Jy x (D_Mpc*1e3)**2
+
+plt.scatter(chime_kko_x, chime_kko_y, color=plt_oneoff[1], marker=plt_oneoff[0], alpha=plt_repeater[2])
+
+plt.text(1e-8,0.5e15,'Non-repeating\nFast Radio Bursts', color=plt_oneoff[1], size=plt_size)
+plt.text(1e-1,1e11,'Repeating\nFast Radio Bursts', color=plt_repeater[1], size=plt_size)
+
 
 ### Long duration transients
 #GW170817
