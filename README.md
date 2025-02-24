@@ -19,3 +19,6 @@ Notes:
 - I updated the value for Jupiter DAM "solar_system.txt".
 
 - I added a Long Period Transients file: LPT.txt
+
+### Current version of the Figure
+[TPS.pdf](https://github.com/user-attachments/files/18943397/TPS.pdf)
