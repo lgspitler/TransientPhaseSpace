@@ -27,6 +27,9 @@ mpl.rcParams['ytick.major.pad']='4'
 ### Plotting parameters
 plot_Tb = True  #Set true if you want lines of constant brightness temperature
 
+##Source label size
+plt_size = 8 #size of source class labels
+
 ##For general plots
 #Symbol, color, alpha
 plt_repeater = ['x', 'lightcoral', 1.0]
@@ -51,8 +54,6 @@ plt_bd = ['d', 'tab:brown', 1.0]
 plt_xrb = ['>', 'indigo', 1.0]
 plt_lpt = ['<', 'indigo', 0.5]
 
-##Source label size
-plt_size = 8 #size of source class labels
 
 #lines of constant brightness temperature
 if plot_Tb:
@@ -74,8 +75,8 @@ if plot_Tb:
     plt.text(1.5e7,1e14,r'$10^{16}$ K',rotation=tb_rot,color='k',alpha=0.3)
     plt.text(1.5e9,1e14,r'$10^{12}$ K',rotation=tb_rot,color='k',alpha=0.3)
     plt.text(5e10,1e13,r'$10^{8}$ K',rotation=tb_rot,color='k',alpha=0.3)
-    plt.text(5e10,1e9,r'$10^{4}$ K',rotation=tb_rot,color='k',alpha=0.3)
-    plt.text(5e10,1e5,r'0 K',rotation=tb_rot,color='k',alpha=0.3)
+#    plt.text(5e10,1e9,r'$10^{4}$ K',rotation=tb_rot,color='k',alpha=0.3)
+#    plt.text(5e10,1e5,r'0 K',rotation=tb_rot,color='k',alpha=0.3)
 
 #plt.grid()
 
@@ -221,10 +222,11 @@ plt.scatter(m81nanox,m81nanoy,color=plt_repeater[1],marker=plt_repeater[0], alph
 ###############################
 
 #---- ASKAP
-askap=np.loadtxt('askap_z_tables.txt', unpack=True, usecols=(1,2,3,4), skiprows=47)
+#Cols: Freq, Width,Flux,Distance
+askap=np.loadtxt('askap_ics_oneoffs.txt', unpack=True, usecols=(1,2,4,6))
 
-askapx=1e-3*askap[2] #convert from ms to seconds
-askapy=askap[1]/askap[2]*askap[3]**2*1e6
+askapx=1e-3*askap[1]*askap[0]/1e3 #convert from ms to seconds; MHz to GHz
+askapy=askap[2]*askap[3]**2*1e6 #convert distance from Mpc to kpc
 
 plt.scatter(askapx, askapy, color=plt_oneoff[1], marker=plt_oneoff[0], alpha=plt_repeater[2])
 
