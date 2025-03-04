@@ -39,7 +39,7 @@ plt_pulsar = ['.', 'tab:blue', 0.7]
 plt_rrat = ['.', 'lightblue', 0.7]
 plt_crab = ['.', 'darkblue', 0.2]
 plt_crabns = ['.', 'darkblue', 0.5]
-plt_sgr = ['o', 'tab:blue', 1.0]
+plt_sgr = ['o', 'darkturquoise', 1.0]
 
 plt_gw = ['s', 'darkgreen', 1.0]
 plt_sn = ['s', 'tab:green', 1.0]
@@ -100,7 +100,7 @@ if plot_Tb:
 psrx,psry=np.loadtxt('pulsars_psrcat_2.5.1.txt', unpack=True, usecols=(4,5))
 
 plt.scatter(psrx,psry,color=plt_pulsar[1],marker=plt_pulsar[0],alpha=plt_pulsar[2])
-plt.text(0.5e-7,1e-3,'Pulsars',color=plt_pulsar[1], size=plt_size)
+plt.text(0.5e-6,1e-5,'Pulsars',color=plt_pulsar[1], size=plt_size)
 
 # RRATs general
 rrat=open('rrats.txt','r')
@@ -113,7 +113,7 @@ for n in lines:
 
 
 plt.scatter(rratx,rraty,color=plt_rrat[1],marker=plt_rrat[0],alpha=plt_rrat[2])
-plt.text(0.8e-2,2e2,'Rotating Radio\nTransients',color=plt_rrat[1], size=plt_size)
+plt.text(0.8e-7,1e-2,'Rotating Radio\nTransients',color=plt_rrat[1], size=plt_size)
 
 # Crab giant pulses
 crabgrp=np.loadtxt('crab_giant.txt')
@@ -168,6 +168,7 @@ plt.scatter(frb180916x,frb180916y,color=plt_repeater[1],marker=plt_repeater[0],a
 ##Use if you want to differentiate repeater and non repeaters
 #plt.text(1e-8,1e12,'Repeating\nFast Radio Bursts',color=plt_repeater[1], size=plt_size, alpha=plt_repeater[2])
 
+#### Magnetars 
 # SGR 1935+2154 range
 sgr = np.loadtxt('sgr1935.txt')
 sgrx=[]
@@ -177,8 +178,18 @@ for n in range(len(sgr)):
     sgry = np.append(sgry,sgr[n][0])
 
 plt.scatter(sgrx,sgry,color=plt_sgr[1], marker=plt_sgr[0], alpha=plt_sgr[2], fc='none')
-plt.text(2e-3,2e5,'Magnetar\nSGR 1935+2154',color=plt_sgr[1], size=plt_size)
+plt.text(2e-3,2e5,'SGR 1935+2154',color=plt_sgr[1], size=plt_size)
+#plt.text(2e-3,2e5,'Magnetar\nSGR 1935+2154',color=plt_sgr[1], size=plt_size)
 #plt.fill_between([np.min(sgrx),np.max(sgrx)],[np.min(sgry),np.min(sgry)],[np.max(sgry),np.max(sgry)],alpha=0.7,color='pink')
+
+
+#Spin-down radio emission
+magnetars = np.loadtxt('radio_loud_magnetars.txt', unpack=True, usecols=(3,9,12))
+
+magx = 1.4*magnetars[0]*0.1 #Rotation period and assumed 10% duty cycle
+magy = 1e-3*magnetars[1]*magnetars[2]**2
+plt.scatter(magx,magy,color=plt_sgr[1], marker=plt_sgr[0], alpha=plt_sgr[2], fc='none')
+plt.text(2e-3,2e2,'Magnetars',color=plt_sgr[1], size=plt_size)
 
 # FRB 190711
 # Macquart+2020, Kumar+2020
