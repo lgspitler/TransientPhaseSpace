@@ -27,6 +27,10 @@ mpl.rcParams['ytick.major.pad']='4'
 ### Plotting parameters
 plot_Tb = True  #Set true if you want lines of constant brightness temperature
 
+### Logarithmic axes min and max
+lxmin,lxmax=-9,12
+lymin,lymax=-10,18
+
 ##Source label size
 plt_size = 8 #size of source class labels
 
@@ -57,14 +61,17 @@ plt_lpt = ['<', 'indigo', 0.5]
 
 #lines of constant brightness temperature
 if plot_Tb:
-    TB = [1e0,1e4,1e8,1e12,1e16,1e20,1e24,1e28,1e32,1e36,1e40,1e44,1e48]
+    TB = [1e4,1e8,1e12,1e16,1e20,1e24,1e28,1e32,1e36,1e40,1e44,1e48]
     x=np.linspace(1e-10,1e20,100)
 
     for tb in TB:
         plt.plot(x,tb*(x**2)*2.761e-5*1.05025e-13,color='k',lw=0.3,alpha=0.2,linestyle='--')
 
     # add TB labels
-    tb_rot=45
+    #tb_rot=180/np.pi*np.arctan((lymax-lymin)/(lxmax-lxmin))
+    tb_rot=49
+    print(tb_rot)
+
     plt.text(5e-9,1e11,r'$10^{44}$ K',rotation=tb_rot,color='k',alpha=0.3)
     plt.text(1.5e-8,1e8,r'$10^{40}$ K',rotation=tb_rot,color='k',alpha=0.3)
     plt.text(5e-8,1e5,r'$10^{36}$ K',rotation=tb_rot,color='k',alpha=0.3)
@@ -75,8 +82,18 @@ if plot_Tb:
     plt.text(1.5e7,1e14,r'$10^{16}$ K',rotation=tb_rot,color='k',alpha=0.3)
     plt.text(1.5e9,1e14,r'$10^{12}$ K',rotation=tb_rot,color='k',alpha=0.3)
     plt.text(5e10,1e13,r'$10^{8}$ K',rotation=tb_rot,color='k',alpha=0.3)
-#    plt.text(5e10,1e9,r'$10^{4}$ K',rotation=tb_rot,color='k',alpha=0.3)
+    plt.text(5e10,1e9,r'$10^{4}$ K',rotation=tb_rot,color='k',alpha=0.3)
 #    plt.text(5e10,1e5,r'0 K',rotation=tb_rot,color='k',alpha=0.3)
+
+### Add Incoherent/coherent fill regions
+ax1 = plt.gca()
+ic1 = 1e12*(x**2)*2.761e-5*1.05025e-13
+ic2 = 1e-20*(x**2)*2.761e-5*1.05025e-13
+ax1.fill_between(x, ic1, ic2, alpha=0.2)
+#plt.text(3e-9, 1e-9, 'Coherent', size=1.5*plt_size, rotation=tb_rot, color='k', alpha=0.3, fontstyle='italic')
+#plt.text(1e8, 1e-9, 'Incoherent', size=1.5*plt_size, rotation=tb_rot)
+plt.text(1e3, 200, 'Coherent', size=1.5*plt_size, rotation=tb_rot, color='k', alpha=0.3, fontstyle='italic')
+plt.text(5e3, 10, 'Incoherent', size=1.5*plt_size, rotation=tb_rot, color='k', alpha=0.3, fontstyle='italic')
 
 #plt.grid()
 
@@ -100,7 +117,7 @@ if plot_Tb:
 psrx,psry=np.loadtxt('pulsars_psrcat_2.5.1.txt', unpack=True, usecols=(4,5))
 
 plt.scatter(psrx,psry,color=plt_pulsar[1],marker=plt_pulsar[0],alpha=plt_pulsar[2])
-plt.text(0.5e-6,1e-5,'Pulsars',color=plt_pulsar[1], size=plt_size)
+plt.text(0.5e-6,1e-4,'Pulsars',color=plt_pulsar[1], size=plt_size)
 
 # RRATs general
 rrat=open('rrats.txt','r')
@@ -274,8 +291,10 @@ plt.scatter(sne[0]*86400*sne[2], 1e-20*sne[1], s=20, color=plt_sn[1], marker=plt
 plt.text(1e8,3e6,'Supernovae', color=plt_sn[1], size=plt_size)
 
 grb=np.loadtxt('Gosia_GRB2.txt', unpack=True, usecols=(1,6,8))
+lgrb=np.loadtxt('long_grbs.txt', unpack=True, usecols=(1,2,3,4))
 plt.scatter(grb[0]*86400*grb[2], 1e-20*grb[1], s=20, color=plt_grb[1], marker=plt_grb[0], alpha=plt_grb[2])
-plt.text(2e7,2e11,'Gamma-ray\nbursts', color=plt_grb[1], size=plt_size)
+plt.scatter(lgrb[0]*86400*lgrb[1], lgrb[2]*(lgrb[3]*1e3)**2, s=20, color=plt_grb[1], marker=plt_grb[0], alpha=plt_grb[2])
+plt.text(2e7,2e11,'Long\nGamma-ray\nbursts', color=plt_grb[1], size=plt_size)
 
 #Solar bursts
 solar=np.loadtxt('solar_bursts.txt', unpack=True, usecols=(4,5))
@@ -304,14 +323,14 @@ plt.text(2e7,30,'X-ray binaries', color=plt_xrb[1], size=plt_size)
 #LPTs
 lpt=np.loadtxt('LPT.txt', unpack=True, usecols=(1,2,3,4))
 plt.scatter(lpt[0]*lpt[1], lpt[2]*lpt[3]**2, color=plt_lpt[1], marker=plt_lpt[0], alpha=plt_lpt[2])
-plt.text(30, 70, 'Long Period\nTransients', color=plt_lpt[1], size=plt_size)
+plt.text(1, 1e3, 'Long Period\nTransients', color=plt_lpt[1], size=plt_size)
 
 ###Global plot comments
 plt.xscale('log')
 plt.yscale('log')
-plt.xlim(1e-9,1e12)
-plt.ylim(1e-10,1e17)
 
+plt.xlim(10**lxmin,10**lxmax)
+plt.ylim(10**lymin,10**lymax)
 
 plt.xlabel(r'Variability time scale (GHz s)', size=12)
 plt.ylabel(r'Radio Pseudo-luminosity (Jy kpc$^2$)', size=12)
