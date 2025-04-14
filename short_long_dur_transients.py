@@ -46,8 +46,9 @@ plt_crabns = ['.', 'darkblue', 0.5]
 plt_sgr = ['o', 'darkturquoise', 1.0]
 
 plt_gw = ['s', 'darkgreen', 1.0]
-plt_sn = ['s', 'tab:green', 1.0]
-plt_grb = ['s', 'lightgreen', 0.5]
+plt_sn = ['s', 'olive', 1.0]
+plt_grb = ['s', 'lightgreen', 1.0]
+plt_sgrb = ['s', 'darkgreen', 1.0]
 
 plt_sun = ['p', 'tab:olive', 1.0]
 plt_ss = ['h', 'tan', 1.0]
@@ -290,11 +291,16 @@ sne=np.loadtxt('Gosia_SN2.txt', unpack=True, usecols=(1,6,8))
 plt.scatter(sne[0]*86400*sne[2], 1e-20*sne[1], s=20, color=plt_sn[1], marker=plt_sn[0], alpha=plt_sn[2])
 plt.text(1e8,3e6,'Supernovae', color=plt_sn[1], size=plt_size)
 
+#GRBs
 grb=np.loadtxt('Gosia_GRB2.txt', unpack=True, usecols=(1,6,8))
 lgrb=np.loadtxt('long_grbs.txt', unpack=True, usecols=(1,2,3,4))
 plt.scatter(grb[0]*86400*grb[2], 1e-20*grb[1], s=20, color=plt_grb[1], marker=plt_grb[0], alpha=plt_grb[2])
 plt.scatter(lgrb[0]*86400*lgrb[1], lgrb[2]*(lgrb[3]*1e3)**2, s=20, color=plt_grb[1], marker=plt_grb[0], alpha=plt_grb[2])
-plt.text(2e7,2e11,'Long\nGamma-ray\nbursts', color=plt_grb[1], size=plt_size)
+plt.text(2e7,2e11,'Long\nGamma-ray\nBursts', color=plt_grb[1], size=plt_size)
+
+sgrb=np.loadtxt('short_grbs.txt', unpack=True, usecols=(1,2,3,4))
+plt.scatter(sgrb[0]*86400*sgrb[1], sgrb[2]*(sgrb[3]*1e3)**2, s=20, color=plt_sgrb[1], marker=plt_sgrb[0], alpha=plt_sgrb[2])
+plt.text(5e3,2e11,'Short\nGamma-ray\nBursts', color=plt_sgrb[1], size=plt_size)
 
 #Solar bursts
 solar=np.loadtxt('solar_bursts.txt', unpack=True, usecols=(4,5))
