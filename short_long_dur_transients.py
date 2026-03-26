@@ -24,6 +24,14 @@ mpl.rcParams['ytick.major.pad']='4'
 #*      = [ ]*(1.05025e-13)  Jy,kpc^2              *
 # note you need to multiply by 1e9**2 to convert to GHz 
 
+def Jykpc2erg_s_Hz(x):
+
+    return x*9e19
+
+def erg_s_Hz2Jykpc(x):
+
+    return x/9e19
+
 ### Plotting parameters
 plot_Tb = True  #Set true if you want lines of constant brightness temperature
 
@@ -268,6 +276,13 @@ dsa110y=dsa110[0]/dsa110[1]*1e6*dsa110[2]**2
 
 plt.scatter(dsa110x, dsa110y, color=plt_oneoff[1], marker=plt_oneoff[0], alpha=plt_oneoff[2])
 
+#-------- MeerKAT
+mkt = np.loadtxt('meerkat_oneoffs.txt', unpack=True, usecols=(1,2,3,4))
+mkt_x = 1e-3*mkt[1]*1.3
+mkt_y = mkt[0]/mkt[1]*1e6*mkt[3]**2   #(D_Mpc*1e3)**2
+
+plt.scatter(mkt_x, mkt_y, color=plt_oneoff[1], marker=plt_oneoff[0], alpha=plt_repeater[2])
+
 #------- CHIME/FRB + KKO
 chime_kko=np.loadtxt('chime_kko_oneoff.txt', unpack=True, usecols=(1,3,5))
 chime_kko_x = 1e-3*chime_kko[1]*0.6  #Duration in ms x 0.6 GHz
@@ -277,7 +292,6 @@ plt.scatter(chime_kko_x, chime_kko_y, color=plt_oneoff[1], marker=plt_oneoff[0],
 
 plt.text(1e-8,0.5e15,'Non-repeating\nFast Radio Bursts', color=plt_oneoff[1], size=plt_size)
 plt.text(1e-1,1e11,'Repeating\nFast Radio Bursts', color=plt_repeater[1], size=plt_size)
-
 
 ### Long duration transients
 #GW170817
@@ -338,8 +352,8 @@ plt.yscale('log')
 plt.xlim(10**lxmin,10**lxmax)
 plt.ylim(10**lymin,10**lymax)
 
-plt.xlabel(r'Variability time scale (GHz s)', size=12)
-plt.ylabel(r'Radio Pseudo-luminosity (Jy kpc$^2$)', size=12)
+plt.xlabel(r'Variability time scale (GHz s)', size=11)
+plt.ylabel(r'Radio Pseudo-luminosity (Jy kpc$^2$)', size=11)
 #plt.ylabel(r'Spectral Luminosity [erg s$^{-1}$ Hz$^{-1}$]')
 #plt.xlabel(r'Transient Duration ($\nu\ W$) [GHz s]', size=14)
 
@@ -347,6 +361,12 @@ plt.ylabel(r'Radio Pseudo-luminosity (Jy kpc$^2$)', size=12)
 # ticks
 ax=plt.gcf().get_axes()
 ax[0].tick_params(labelsize=10)
+
+#Plot secondary axis
+secax = ax[0].secondary_yaxis('right', functions=(Jykpc2erg_s_Hz, erg_s_Hz2Jykpc))
+secax.tick_params(labelsize=10)
+secax.set_ylabel('Spectral luminosity (erg s$^{-1}$ Hz$^{-1}$)', size=11)
+
 #plt.axes().tick_params(axis = 'both', which = 'minor', labelsize = 0, labelcolor='white')
 #plt.axes().set_xticks([1e-8,1e-6,1e-4,1e-2,1], minor=True)
 #plt.axes().set_yticks([1e-9,1e-8,1e-6,1e-5,1e-3,1e-2,1,10,1e3,1e4,1e6,1e7,1e9,1e10,1e12,1e13,1e15], minor=True)
